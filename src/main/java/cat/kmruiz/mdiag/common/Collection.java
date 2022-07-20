@@ -1,7 +1,5 @@
 package cat.kmruiz.mdiag.common;
 
-import java.util.OptionalInt;
-
 public record Collection (
         String shard,
         String database,
@@ -9,7 +7,7 @@ public record Collection (
         DataSize compressedDataSize,
         DataSize dataSize,
         DataSize indexSize,
-        OptionalInt estimatedDocumentCount,
+        int estimatedDocumentCount,
         String sampleDocument
 ) {
 }

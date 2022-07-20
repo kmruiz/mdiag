@@ -57,7 +57,7 @@ public final class ShardedClusterTopologyAnalyzer {
                                     new DataSize(jsonPath(collDoc, 0, "storageStats", "storageSize")),
                                     new DataSize(jsonPath(collDoc, 0, "storageStats", "size")),
                                     new DataSize(jsonPath(collDoc, 0, "storageStats", "totalIndexSize")),
-                                    OptionalInt.of(jsonPath(collDoc, 0, "storageStats", "count")),
+                                    jsonPath(collDoc, 0, "storageStats", "count"),
                                     sampleDocOfCollection(dbName, collDoc.getString("ns").substring(collDoc.getString("ns").indexOf('.') + 1))
 
                             ));
@@ -90,7 +90,7 @@ public final class ShardedClusterTopologyAnalyzer {
                             default -> unknownSetting(accumulator, document);
                         }, (a, b) -> a);
 
-        final var history = StreamSupport.stream(changelogCollection.find().spliterator(), false)
+        final var history = StreamSupport.stream(changelogCollection.find().limit(100).sort(new Document("time", -1)).spliterator(), false)
                 .map(changelog -> new HistoryItem(
                         changelog.getString("server"),
                         changelog.getString("shard"),

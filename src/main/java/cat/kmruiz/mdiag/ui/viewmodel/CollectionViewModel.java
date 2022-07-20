@@ -22,7 +22,7 @@ public class CollectionViewModel {
         this.compressedDataSize = new SimpleStringProperty(collection.compressedDataSize().humanize());
         this.dataSize = new SimpleStringProperty(collection.dataSize().humanize());
         this.indexSize = new SimpleStringProperty(collection.indexSize().humanize());
-        this.estimatedDocumentCount = new SimpleIntegerProperty(collection.estimatedDocumentCount().orElse(0));
+        this.estimatedDocumentCount = new SimpleIntegerProperty(collection.estimatedDocumentCount());
     }
 
     public static ObservableList<CollectionViewModel> fromModel(List<Collection> collections) {

@@ -1,27 +1,33 @@
 package cat.kmruiz.mdiag;
 
-import cat.kmruiz.mdiag.overview.topology.sharded.ShardedClusterTopologyAnalyzer;
-import cat.kmruiz.mdiag.ui.components.topology.ShardedClusterTopologyComponent;
-import com.mongodb.client.MongoClients;
+import cat.kmruiz.mdiag.ui.flows.MDialogInitFlow;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MDiag extends Application {
+    public static final String VERSION = "0.0.1";
+
+    private static Stage CURRENT_STAGE = null;
+
+    public static Stage newStage(String title, Scene scene) {
+        CURRENT_STAGE.close();
+        CURRENT_STAGE = new Stage();
+        CURRENT_STAGE.setTitle(title + " - mdiag " + VERSION);
+        CURRENT_STAGE.setScene(scene);
+        CURRENT_STAGE.show();
+
+        return CURRENT_STAGE;
+    }
+
     @Override
     public void start(Stage stage) {
-        final var localhost = MongoClients.create("mongodb://localhost/?retryWrites=true&w=majority");
-        final var analyzer = new ShardedClusterTopologyAnalyzer(localhost);
-
-        final var topology = analyzer.analyze();
-
-        final var root = new VBox();
-        root.getChildren().add(new ShardedClusterTopologyComponent(topology));
-
-        final var scene = new Scene(new ScrollPane(root), 1920, 1080);
+        final var scene = new Scene(new MDialogInitFlow(), 500, 500);
+        stage.setTitle("mdiag " + VERSION);
         stage.setScene(scene);
+
         stage.show();
+        CURRENT_STAGE = stage;
+
     }
 }

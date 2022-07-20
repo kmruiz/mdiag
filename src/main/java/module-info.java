@@ -7,4 +7,5 @@ module mdiag {
 
     opens cat.kmruiz.mdiag to javafx.graphics;
     opens cat.kmruiz.mdiag.common to javafx.graphics;
+    opens cat.kmruiz.mdiag.ui.viewmodel to javafx.base;
 }

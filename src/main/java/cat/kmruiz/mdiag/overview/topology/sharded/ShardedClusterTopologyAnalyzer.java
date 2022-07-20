@@ -38,12 +38,12 @@ public final class ShardedClusterTopologyAnalyzer {
         final var databasesCollection = config.getCollection("databases");
 
         final var collectionInfo = StreamSupport.stream(databasesCollection.find().spliterator(), false)
-                .map(dbInfo -> {
-                    String dbName = dbInfo.getString("_id");
-                    String primaryShard = dbInfo.getString("primary");
-
+                .flatMap(dbInfo -> {
+                    final var dbName = dbInfo.getString("_id");
+                    final var primaryShard = dbInfo.getString("primary");
                     final var db = client.getDatabase(dbName);
-                    final var allCollMetadata = StreamSupport.stream(db.listCollectionNames().spliterator(), false)
+
+                    return StreamSupport.stream(db.listCollectionNames().spliterator(), false)
                             .map(collName ->
                                     db.getCollection(collName).aggregate(List.of(
                                             new Document("$collStats", new Document(
@@ -51,19 +51,17 @@ public final class ShardedClusterTopologyAnalyzer {
                                             ))
                                     )).batchSize(1).into(new ArrayList<>()).get(0)
                             ).map(collDoc -> new Collection(
+                                    primaryShard,
                                     dbName,
                                     collDoc.getString("ns").substring(collDoc.getString("ns").indexOf('.') + 1),
                                     new DataSize(jsonPath(collDoc, 0, "storageStats", "storageSize")),
                                     new DataSize(jsonPath(collDoc, 0, "storageStats", "size")),
-                                    new DataSize(jsonPath(collDoc, 0, "indexDetails", "totalIndexSize")),
+                                    new DataSize(jsonPath(collDoc, 0, "storageStats", "totalIndexSize")),
                                     OptionalInt.of(jsonPath(collDoc, 0, "storageStats", "count")),
                                     sampleDocOfCollection(dbName, collDoc.getString("ns").substring(collDoc.getString("ns").indexOf('.') + 1))
 
-                            ))
-                            .toList();
-
-                    return Map.entry(primaryShard, allCollMetadata);
-                }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                            ));
+                }).collect(Collectors.groupingBy(Collection::shard));
 
         final var currentShards = StreamSupport.stream(shardsCollection.find().spliterator(), false)
                 .map(shard -> new Shard(
@@ -71,7 +69,7 @@ public final class ShardedClusterTopologyAnalyzer {
                         LocalDateTime.ofEpochSecond(shard.get("topologyTime", BsonTimestamp.class).getTime(), 0, ZoneOffset.UTC),
                         shard.getInteger("state"),
                         parseShardMembers(shard.getString("_id"), shard.getString("host")),
-                        collectionInfo.get(shard.getString("_id"))
+                        collectionInfo.getOrDefault(shard.getString("_id"), Collections.emptyList())
                 )).toList();
 
         final var currentMongos = StreamSupport.stream(mongosCollection.find().spliterator(), false)

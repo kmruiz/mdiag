@@ -1,0 +1,15 @@
+.MDialogInitFlow {
+    -fx-padding: 32;
+}
+
+.MDialogInitFlowSectionSeparator {
+    -fx-font-size: 32;
+}
+
+.MDialogInitFlowOptionsPane {
+    -fx-spacing: 64;
+}
+
+.MDialogInitFlowConnectionPane {
+    -fx-spacing: 16;
+}

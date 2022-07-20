@@ -3,6 +3,7 @@ package cat.kmruiz.mdiag.common;
 import java.util.OptionalInt;
 
 public record Collection (
+        String shard,
         String database,
         String collection,
         DataSize compressedDataSize,

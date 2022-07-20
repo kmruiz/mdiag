@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 
 public class ShardComponent extends VBox {
     private final Shard shard;
+    private final HBox innerLayout;
 
     private final HBox nodes;
     private final HBox shardTitle;
@@ -17,11 +18,12 @@ public class ShardComponent extends VBox {
         Css.apply(this);
 
         this.shard = shard;
+
+        this.innerLayout = new HBox();
         this.shardTitle = new HBox();
         this.shardTitle.getStyleClass().add("ShardComponentTitle");
 
         this.nodes = new HBox();
-
         final var down = new VBox();
         down.getStyleClass().add("ShardComponentGraph");
         final var arbiters = new VBox();
@@ -48,9 +50,11 @@ public class ShardComponent extends VBox {
         this.nodes.getChildren().add(analytics);
         this.nodes.getChildren().add(secondaries);
         this.nodes.getChildren().add(primary);
-        this.shardTitle.getChildren().add(new Text(shard.id()));
 
-        this.getChildren().add(nodes);
+        this.innerLayout.getChildren().add(new ShardOwningCollectionInfoComponent(shard));
+        this.innerLayout.getChildren().add(nodes);
+        this.shardTitle.getChildren().add(new Text(shard.id()));
+        this.getChildren().add(innerLayout);
         this.getChildren().add(shardTitle);
     }
 }

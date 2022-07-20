@@ -2,10 +2,13 @@ package cat.kmruiz.mdiag.ui.flows;
 
 import cat.kmruiz.mdiag.MDiag;
 import cat.kmruiz.mdiag.ui.Css;
+import cat.kmruiz.mdiag.ui.JavaFXApplication;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -38,6 +41,7 @@ public class MDialogInitFlow extends VBox {
         optionsPane.getChildren().add(importButton);
         getChildren().add(optionsPane);
 
+        connectionStringTextField.setOnKeyReleased(this::doConnectIfEnter);
         submitButton.setOnAction(this::doConnect);
         importButton.setOnAction(this::doImport);
     }
@@ -49,6 +53,12 @@ public class MDialogInitFlow extends VBox {
         return separator;
     }
 
+    private void doConnectIfEnter(KeyEvent e) {
+        if (e.getCode().equals(KeyCode.ENTER)) {
+            doConnect(null);
+        }
+    }
+
     private void doConnect(ActionEvent e) {
         new MDialogLiveFlow(connectionStringTextField.getText());
     }
@@ -58,7 +68,7 @@ public class MDialogInitFlow extends VBox {
         fileChooser.setTitle("Export");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("mdiag.json Report", "*.json"));
 
-        final var reportFile = fileChooser.showOpenDialog(MDiag.currentStage());
+        final var reportFile = fileChooser.showOpenDialog(JavaFXApplication.currentStage());
         if (reportFile != null && reportFile.exists()) {
             new MDialogImportFlow(reportFile);
         }

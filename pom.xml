@@ -18,6 +18,7 @@
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <gson.version>2.9.0</gson.version>
         <jackson-databind.version>2.13.3</jackson-databind.version>
+        <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
     </properties>
 
     <dependencies>
@@ -75,8 +76,80 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>cat.kmruiz.mdiag.MDiag</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
-
+    <profiles>
+        <profile>
+            <id>release-linux</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>linux</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics </artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>linux</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>release-windows</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>windows</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics </artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>win</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>release-osx</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>osx</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics </artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>mac</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

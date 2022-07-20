@@ -2,6 +2,7 @@ package cat.kmruiz.mdiag.ui.flows;
 
 import cat.kmruiz.mdiag.MDiag;
 import cat.kmruiz.mdiag.overview.topology.sharded.ShardedClusterTopologyAnalyzer;
+import cat.kmruiz.mdiag.ui.JavaFXApplication;
 import cat.kmruiz.mdiag.ui.components.topology.ShardedClusterTopologyComponent;
 import com.mongodb.client.MongoClients;
 import javafx.scene.Scene;
@@ -16,6 +17,6 @@ public class MDialogLiveFlow extends VBox {
         final var topology = analyzer.analyze();
         this.getChildren().add(new ShardedClusterTopologyComponent(topology));
 
-        MDiag.newStage("mdialog", new Scene(new ScrollPane(this)));
+        JavaFXApplication.newStage("mdialog", new Scene(new ScrollPane(this)));
     }
 }

@@ -4,6 +4,7 @@ import cat.kmruiz.mdiag.MDiag;
 import cat.kmruiz.mdiag.overview.ExportedReport;
 import cat.kmruiz.mdiag.overview.topology.sharded.ShardedClusterTopology;
 import cat.kmruiz.mdiag.ui.Css;
+import cat.kmruiz.mdiag.ui.JavaFXApplication;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -65,13 +66,13 @@ public class ShardedClusterTopologyComponent extends HBox {
         fileChooser.setTitle("Export");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("mdiag.json Report", "*.json"));
 
-        final var file = fileChooser.showSaveDialog(MDiag.currentStage());
+        final var file = fileChooser.showSaveDialog(JavaFXApplication.currentStage());
         if (file != null) {
-            final var version = MDiag.VERSION;
+            final var version = JavaFXApplication.VERSION;
             final var date = new Date();
             final var report = new ExportedReport(version, date, topology);
             try {
-                final var reportJson = MDiag.JSON.writeValueAsString(report);
+                final var reportJson = JavaFXApplication.JSON.writeValueAsString(report);
                 Files.writeString(file.toPath(), reportJson, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException e) {
                 throw new RuntimeException(e);

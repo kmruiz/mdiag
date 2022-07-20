@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class MDiag extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        final var localhost = MongoClients.create("mongodb+srv://kevinm001:X3v2cbUZohPeJMMjHR_wbJnj@todelete.nngro.mongodb.net/?retryWrites=true&w=majority");
+        final var localhost = MongoClients.create("mongodb://localhost/?retryWrites=true&w=majority");
         final var analyzer = new ShardedClusterTopologyAnalyzer(localhost);
 
         final var topology = analyzer.analyze();

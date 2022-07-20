@@ -4,6 +4,8 @@ import java.util.List;
 
 public record ShardedClusterTopology(
         List<Shard> shards,
-        List<ShardMongos> mongos
+        List<ShardMongos> mongos,
+        Settings settings,
+        List<HistoryItem> history
 ) {
 }

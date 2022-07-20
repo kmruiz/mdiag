@@ -2,10 +2,7 @@ package cat.kmruiz.mdiag.ui.flows;
 
 import cat.kmruiz.mdiag.MDiag;
 import cat.kmruiz.mdiag.ui.Css;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

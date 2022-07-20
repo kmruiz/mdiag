@@ -1,10 +1,6 @@
 package cat.kmruiz.mdiag.ui;
 
-import javafx.scene.Node;
 import javafx.scene.Parent;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public final class Css {
     private Css() {}

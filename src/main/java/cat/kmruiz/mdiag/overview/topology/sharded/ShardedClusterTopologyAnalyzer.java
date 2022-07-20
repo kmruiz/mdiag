@@ -1,7 +1,7 @@
 package cat.kmruiz.mdiag.overview.topology.sharded;
 
-import cat.kmruiz.mdiag.common.DataSize;
 import cat.kmruiz.mdiag.common.Collection;
+import cat.kmruiz.mdiag.common.DataSize;
 import cat.kmruiz.mdiag.common.IndexDefinition;
 import cat.kmruiz.mdiag.common.NodeType;
 import com.mongodb.client.MongoClient;
@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

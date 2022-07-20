@@ -21,16 +21,16 @@ jobs:
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:
-          args: target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar
+          args: target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Generate md5 checksum
-          run: md5sum < target/mdiag-release-windows-0.0.1.jar | awk '{print $1}' > target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar.md5
+      - name: Generate md5 checksum
+        run: md5sum < target/mdiag-release-windows-0.0.1.jar | awk '{print $1}' > target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar.md5
 
-        - name: Upload md5 checksum
-          uses: JasonEtco/upload-to-release@master
-          with:
-            args: target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar.md5
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload md5 checksum
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: target/mdiag-release-windows-${{ github.event.release.tag_name }}.jar.md5 text/plain
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

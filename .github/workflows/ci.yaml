@@ -1,0 +1,20 @@
+name: Test
+
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '18'
+          distribution: 'temurin'
+      - name: Generate Linux Package
+        run: mvn --batch-mode package -Drelease=linux
+
+      - name: Generate md5 checksum
+        run: md5sum < target/mdiag-release-linux-0.0.1.jar | awk '{print $1}' > target/mdiag-release-linux-0.0.1.jar.md5

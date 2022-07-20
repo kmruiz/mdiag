@@ -7,8 +7,22 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+
 public class JavaFXApplication extends Application {
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION;
+
+    static {
+        try {
+            VERSION = new Scanner(JavaFXApplication.class.getResourceAsStream("/version.txt"), "UTF-8").useDelimiter("\\A").next();
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+    }
 
     public static final ObjectMapper JSON = new ObjectMapper()
             .findAndRegisterModules()

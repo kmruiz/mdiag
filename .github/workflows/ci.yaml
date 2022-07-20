@@ -13,8 +13,5 @@ jobs:
         with:
           java-version: '18'
           distribution: 'temurin'
-      - name: Generate Linux Package
-        run: mvn --batch-mode package -Drelease=linux
-
-      - name: Generate md5 checksum
-        run: md5sum < target/mdiag-release-linux-0.0.1.jar | awk '{print $1}' > target/mdiag-release-linux-0.0.1.jar.md5
+      - name: Run Tests
+        run: mvn --batch-mode test

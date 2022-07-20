@@ -18,9 +18,19 @@ jobs:
       - name: Generate Linux Package
         run: mvn --batch-mode package -Drelease=linux
 
-      - name: Upload Release
+      - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:
-          args: target/mdiag-release-linux-${{ github.event.release.tag_name }}.jar application/zip
+          args: target/mdiag-release-linux-${{ github.event.release.tag_name }}.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate md5 checksum
+        run: md5sum < target/mdiag-release-linux-0.0.1.jar | awk '{print $1}' > target/mdiag-release-linux-${{ github.event.release.tag_name }}.jar.md5
+
+      - name: Upload md5 checksum
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: target/mdiag-release-linux-${{ github.event.release.tag_name }}.jar.md5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

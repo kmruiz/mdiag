@@ -39,6 +39,7 @@ the signature of the release with the md5 file of your version.
 * [x] Reports can be exported to JSON and imported again
 * [ ] Support for replica sets
 * [ ] Support for standalone mongod instances
+* [ ] Use GraalVM for native image distributions (_nice to have_)
 
 Other features might be coming also if I need them.
 

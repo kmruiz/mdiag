@@ -1,4 +1,9 @@
-# mdiag
+# mdiag ![Latest Version](https://img.shields.io/github/v/release/kmruiz/mdiag?include_prereleases) ![MongoDB 6.0](https://img.shields.io/badge/MongoDB-6.0-%2300EC64) ![MongoDB 5.0](https://img.shields.io/badge/MongoDB-5.0-%2300EC64) ![MongoDB 4.4](https://img.shields.io/badge/MongoDB-4.4-%2300EC64)
+
+![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/ci.yaml/badge.svg)
+![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/release-linux.yaml/badge.svg)
+![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/release-windows.yaml/badge.svg)
+![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/release-osx.yaml/badge.svg)
 
 JavaFX application that summarises the topology of MongoDB clusters. It requires Java 18 to run.
 

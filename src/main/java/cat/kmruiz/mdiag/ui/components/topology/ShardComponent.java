@@ -1,27 +1,56 @@
 package cat.kmruiz.mdiag.ui.components.topology;
 
 import cat.kmruiz.mdiag.overview.topology.sharded.Shard;
-import javafx.geometry.Orientation;
-import javafx.scene.layout.FlowPane;
+import cat.kmruiz.mdiag.ui.Css;
+import cat.kmruiz.mdiag.ui.Images;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class ShardComponent extends FlowPane {
+public class ShardComponent extends VBox {
     private final Shard shard;
-    private final FlowPane members;
-    private final Text shardId;
+
+    private final HBox nodes;
+    private final HBox shardTitle;
 
     public ShardComponent(Shard shard) {
+        Css.apply(this);
+
         this.shard = shard;
-        this.members = new FlowPane(Orientation.HORIZONTAL);
-        this.shardId = new Text(shard.id());
+        this.shardTitle = new HBox();
+        this.shardTitle.getStyleClass().add("ShardComponentTitle");
 
-        this.setOrientation(Orientation.VERTICAL);
+        this.nodes = new HBox();
 
-        for (final var member : shard.members()) {
-            this.members.getChildren().add(new ShardMemberComponent(member));
+        final var down = new VBox();
+        down.getStyleClass().add("ShardComponentGraph");
+        final var arbiters = new VBox();
+        arbiters.getStyleClass().add("ShardComponentGraph");
+        final var analytics = new VBox();
+        analytics.getStyleClass().add("ShardComponentGraph");
+        final var secondaries = new VBox();
+        secondaries.getStyleClass().add("ShardComponentGraph");
+        final var primary = new VBox();
+        primary.getStyleClass().add("ShardComponentGraph");
+
+        for (final var node : shard.members()) {
+            switch (node.nodeType()) {
+                case DOWN -> down.getChildren().add(Images.small(Images.DOWN));
+                case ARBITER -> arbiters.getChildren().add(Images.small(Images.ARBITER));
+                case ANALYTICS -> analytics.getChildren().add(Images.small(Images.ANALYTICS));
+                case SECONDARY -> secondaries.getChildren().add(Images.small(Images.SECONDARY));
+                case PRIMARY -> primary.getChildren().add(Images.small(Images.PRIMARY));
+            }
         }
 
-        this.getChildren().add(shardId);
-        this.getChildren().add(members);
+        this.nodes.getChildren().add(down);
+        this.nodes.getChildren().add(arbiters);
+        this.nodes.getChildren().add(analytics);
+        this.nodes.getChildren().add(secondaries);
+        this.nodes.getChildren().add(primary);
+        this.shardTitle.getChildren().add(new Text(shard.id()));
+
+        this.getChildren().add(nodes);
+        this.getChildren().add(shardTitle);
     }
 }

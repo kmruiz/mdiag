@@ -1,8 +1,9 @@
 package cat.kmruiz.mdiag.overview.topology.sharded;
 
-import cat.kmruiz.mdiag.DataSize;
+import cat.kmruiz.mdiag.common.DataSize;
 import cat.kmruiz.mdiag.common.Collection;
 import cat.kmruiz.mdiag.common.IndexDefinition;
+import cat.kmruiz.mdiag.common.NodeType;
 import com.mongodb.client.MongoClient;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
@@ -11,6 +12,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -118,7 +121,9 @@ public final class ShardedClusterTopologyAnalyzer {
         final var onlyHosts = topologyString.substring(shardId.length() + 1);
         final var hostList = onlyHosts.split(",");
 
-        return Stream.of(hostList).map(ShardMember::new).toList();
+        AtomicBoolean hadPrimary = new AtomicBoolean(false);
+
+        return Stream.of(hostList).map(e -> new ShardMember(e, hadPrimary.getAndSet(true) ? NodeType.SECONDARY : NodeType.PRIMARY)).toList();
     }
 
     private HistoryItem.Details parseDetails(Document details, String operation) {

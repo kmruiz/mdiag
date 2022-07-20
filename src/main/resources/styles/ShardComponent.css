@@ -1,0 +1,17 @@
+.ShardComponent {
+    -fx-border-width: 1;
+    -fx-border-color: #5A6C75;
+}
+
+.ShardComponentTitle {
+    -fx-font-size: 26;
+    -fx-border-width: 1;
+    -fx-border-color: #5A6C75;
+    -fx-background-color: #00EC64;
+    -fx-alignment: center;
+    -fx-fill: #5A6C75;
+}
+
+.ShardComponentGraph {
+    -fx-alignment: center;
+}

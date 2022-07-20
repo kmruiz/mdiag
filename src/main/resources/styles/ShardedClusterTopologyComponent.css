@@ -1,0 +1,9 @@
+.ShardedClusterTopologyComponentShards {
+    -fx-spacing: 16;
+}
+
+.ShardedClusterTopologyComponentMongos {
+    -fx-padding: 32;
+    -fx-spacing: 64;
+    -fx-alignment: center;
+}

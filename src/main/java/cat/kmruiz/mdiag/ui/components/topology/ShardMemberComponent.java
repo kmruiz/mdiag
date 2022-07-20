@@ -1,18 +1,13 @@
 package cat.kmruiz.mdiag.ui.components.topology;
 
 import cat.kmruiz.mdiag.overview.topology.sharded.ShardMember;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
+import eu.hansolo.fx.charts.forcedirectedgraph.GraphNode;
 
-public class ShardMemberComponent extends StackPane {
+public class ShardMemberComponent extends GraphNode {
     private final ShardMember shardMember;
-    private final Text memberName;
 
     public ShardMemberComponent(ShardMember shardMember) {
+        super(shardMember.host());
         this.shardMember = shardMember;
-        this.memberName = new Text(shardMember.host());
-
-        this.setStyle("-fx-border-color: black;");
-        this.getChildren().add(memberName);
     }
 }

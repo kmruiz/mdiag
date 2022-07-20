@@ -32,8 +32,8 @@ the signature of the release with the md5 file of your version.
 * [ ] Shows a changelog of the topology
 * [x] Shows collection information and their primary shards
 * [x] Reports can be exported to JSON and imported again
-* [ ] Standalone replica sets
-* [ ] Standalone implementations
+* [ ] Support for replica sets
+* [ ] Support for standalone mongod instances
 
 Other features might be coming also if I need them.
 

@@ -28,6 +28,8 @@ the signature of the release with the md5 file of your version.
 * [ ] Shows arbiters of shards
 * [ ] Topology of the configServer
 * [ ] Shows analytics nodes of shards
+* [ ] Shows unbalanced shards
+* [ ] Shows a changelog of the topology
 * [x] Shows collection information and their primary shards
 * [x] Reports can be exported to JSON and imported again
 * [ ] Standalone replica sets

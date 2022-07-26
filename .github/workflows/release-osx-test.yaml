@@ -17,12 +17,12 @@ jobs:
           java-version: '18'
           distribution: 'temurin'
       - name: Generate OSX Package
-        run: mvn --batch-mode package -Drelease=osx
+        run: mvn --batch-mode package -Drelease=osx-aarch64
 
       - uses: actions/upload-artifact@v3
         with:
           name: jar-file
-          path: target/mdiag-release-osx-0.0.2.jar
+          path: target/mdiag-release-osx-aarch64-0.0.2.jar
 
   publish:
     runs-on: ubuntu-latest
@@ -33,16 +33,16 @@ jobs:
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:
-          args: mdiag-release-osx-0.0.2.jar application/zip
+          args: mdiag-release-osx-aarch64-0.0.2.jar application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate md5 checksum
-        run: md5sum < mdiag-release-osx-0.0.2.jar | awk '{print $1}' > mdiag-release-osx-0.0.2.jar.md5
+        run: md5sum < mdiag-release-osx-aarch64-0.0.2.jar | awk '{print $1}' > mdiag-release-osx-aarch64-0.0.2.jar.md5
 
       - name: Upload md5 checksum
         uses: JasonEtco/upload-to-release@master
         with:
-          args: mdiag-release-osx-0.0.2.jar.md5 text/plain
+          args: mdiag-release-osx-aarch64-0.0.2.jar.md5 text/plain
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -155,11 +155,28 @@
             </dependencies>
         </profile>
         <profile>
-            <id>release-osx</id>
+            <id>release-osx-aarch64</id>
             <activation>
                 <property>
                     <name>release</name>
-                    <value>osx</value>
+                    <value>osx-aarch64</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics </artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>mac-aarch64</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>release-osx-intel</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>osx-intel</value>
                 </property>
             </activation>
             <dependencies>

@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: '18'
           distribution: 'temurin'
-      - name: Generate Linux Package
+      - name: Generate Windows Package
         run: mvn --batch-mode package -Drelease=windows
 
       - name: Upload Jar Artifact

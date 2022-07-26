@@ -48,6 +48,11 @@ jobs:
       - name: Generate OSX ARM Package
         run: mvn --batch-mode package -Drelease=osx-aarch64
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: jar-file
+          path: target/mdiag-release-osx-aarch64-0.0.2.jar
+
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:

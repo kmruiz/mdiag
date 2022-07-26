@@ -1,13 +1,12 @@
 name: Release OSX Test
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
-  build:
-    runs-on: macos-latest
+  build-intel:
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -16,33 +15,51 @@ jobs:
         with:
           java-version: '18'
           distribution: 'temurin'
-      - name: Generate OSX Package
-        run: mvn --batch-mode package -Drelease=osx-aarch64
+      - name: Generate OSX Intel Package
+        run: mvn --batch-mode package -Drelease=release-osx-intel
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: jar-file
-          path: target/mdiag-release-osx-aarch64-0.0.2.jar
-
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: jar-file
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:
-          args: mdiag-release-osx-aarch64-0.0.2.jar application/zip
+          args: target/mdiag-release-osx-intel-0.0.2.jar application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate md5 checksum
-        run: md5sum < mdiag-release-osx-aarch64-0.0.2.jar | awk '{print $1}' > mdiag-release-osx-aarch64-0.0.2.jar.md5
+        - name: Generate md5 checksum
+          run: md5sum < target/mdiag-release-osx-intel-0.0.2.jar | awk '{print $1}' > target/mdiag-release-osx-intel-0.0.2.jar.md5
 
-      - name: Upload md5 checksum
+        - name: Upload md5 checksum
+          uses: JasonEtco/upload-to-release@master
+          with:
+            args: target/mdiag-release-osx-intel-0.0.2.jar.md5 text/plain
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-arm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          java-version: '18'
+          distribution: 'temurin'
+      - name: Generate OSX ARM Package
+        run: mvn --batch-mode package -Drelease=release-osx-aarch64
+
+      - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
         with:
-          args: mdiag-release-osx-aarch64-0.0.2.jar.md5 text/plain
+          args: target/mdiag-release-osx-aarch64-0.0.2.jar application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Generate md5 checksum
+              run: md5sum < target/mdiag-release-osx-aarch64-0.0.2.jar | awk '{print $1}' > target/mdiag-release-osx-aarch64-0.0.2.jar.md5
+
+            - name: Upload md5 checksum
+              uses: JasonEtco/upload-to-release@master
+              with:
+                args: target/mdiag-release-osx-aarch64-0.0.2.jar.md5 text/plain
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

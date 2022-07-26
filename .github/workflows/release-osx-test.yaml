@@ -1,8 +1,9 @@
-name: Release OSX
+name: Release OSX Test
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   build:

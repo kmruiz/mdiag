@@ -17,7 +17,7 @@ jobs:
           java-version: '18'
           distribution: 'temurin'
       - name: Generate OSX Intel Package
-        run: mvn --batch-mode package -Drelease=release-osx-intel
+        run: mvn --batch-mode package -Drelease=osx-intel
 
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master
@@ -46,7 +46,7 @@ jobs:
           java-version: '18'
           distribution: 'temurin'
       - name: Generate OSX ARM Package
-        run: mvn --batch-mode package -Drelease=release-osx-aarch64
+        run: mvn --batch-mode package -Drelease=osx-aarch64
 
       - name: Upload Jar Artifact
         uses: JasonEtco/upload-to-release@master

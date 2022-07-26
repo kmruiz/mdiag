@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: '18'
           distribution: 'temurin'
-      - name: Generate Linux Package
+      - name: Generate OSX Package
         run: mvn --batch-mode package -Drelease=osx
 
       - name: Upload Jar Artifact

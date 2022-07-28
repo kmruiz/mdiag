@@ -5,12 +5,7 @@
 ![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/release-windows.yaml/badge.svg)
 ![CI Workflow](https://github.com/kmruiz/mdiag/actions/workflows/release-osx.yaml/badge.svg)
 
-JavaFX application that summarises the topology of MongoDB clusters. It requires Java 18 to run.
-
-This software is not developed or supported by MongoDB, it's an independent development. Software is distributed AS IS
-and should be tested in a testing environment before running in production. 
-
-This application is still in development, and it lacks decent quality checks and lots of useful functionalities.
+JavaFX application that summarises the topology of MongoDB clusters. It requires Java 18 to run.  This application is still in development, and it lacks decent quality checks and lots of useful functionalities.
 
 | MongoDB Version | Tested | Should Work |
 |-----------------|--------|-------------|
@@ -57,3 +52,7 @@ Shows an overview of the current cluster.
 
 ![Dashboard that shows a view of the current cluster. The picture shows a sharded cluster, where each shard contains a three replica set](docs/img/live-report.png)
 
+# Disclaimer
+
+This software is not supported by [MongoDB, Inc.](https://mongodb.com) under any of their commercial support subscriptions or otherwise. 
+Any usage of mtools is at your own risk. Bug reports, feature requests and questions can be posted in the Issues section on GitHub.
